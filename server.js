@@ -1,3 +1,6 @@
+
+const recentEmailRequests = new Set();
+
 // backend/server.js
 require('dotenv').config();
 const express = require('express');
@@ -108,6 +111,21 @@ function isValidEmail(email) {
 app.post('/api/send-pdf', async (req, res) => {
   try {
     const { name, email, phone } = req.body || {};
+    // ===== Deduplication guard (prevents double email) =====
+const dedupeKey = `${email}-${new Date().toISOString().slice(0, 16)}`; // per-minute key
+
+if (recentEmailRequests.has(dedupeKey)) {
+  console.log('Duplicate request blocked for:', email);
+  return res.json({ ok: true, message: 'Already sent recently' });
+}
+
+recentEmailRequests.add(dedupeKey);
+
+// auto-clean after 2 minutes
+setTimeout(() => {
+  recentEmailRequests.delete(dedupeKey);
+}, 2 * 60 * 1000);
+
     if (!name || !email) {
       return res.status(400).json({ ok: false, error: 'name and email required' });
     }
