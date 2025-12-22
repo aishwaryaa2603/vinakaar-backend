@@ -15,7 +15,7 @@ const app = express();
 // Config
 const PORT = process.env.PORT || 3000;
 const CSV_PATH = path.join(__dirname, 'requests.csv');
-const PDF_REL_PATH = process.env.PDF_FILENAME || 'Vinakaar Manifestation Journal.pdf'; // place file in backend/assets/
+const PDF_REL_PATH = process.env.PDF_FILENAME || 'The Manifestation Mindset Journal.pdf'; // place file in backend/assets/
 const PDF_PATH = path.join(__dirname, 'assets', PDF_REL_PATH);
 
 // SendGrid setup
@@ -158,8 +158,9 @@ setTimeout(() => {
       subject: process.env.EMAIL_SUBJECT || 'Your requested PDF from Vinakaar',
       text:
         (process.env.EMAIL_TEXT ||
-          `Hi ${name},\n\nThanks for requesting the PDF. Please find it attached.\n\nWarmly,\nVinakaar`) + '\n',
-      attachments: [
+  `Hi ${name},\n\nThanks for requesting the PDF. Please find it attached.\n\n<strong>You are permitted to print a copy of this journal for personal use only.</strong>\n\nWarmly,\nVinakaar`
+) + '\n',
+attachments: [
         {
           content: fileBase64,
           filename: path.basename(PDF_PATH),
