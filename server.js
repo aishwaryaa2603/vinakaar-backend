@@ -155,10 +155,11 @@ setTimeout(() => {
     const msg = {
       to: email,
       from: FROM_EMAIL,
-      subject: process.env.EMAIL_SUBJECT || 'Your requested PDF from Vinakaar',
+      subject: process.env.EMAIL_SUBJECT || 'Your requested Manifestation Journal from Vinakaar',
       text:
         (process.env.EMAIL_TEXT ||
-  `Hi ${name},\n\nThanks for requesting the PDF. Please find it attached.\n\n<strong>You are permitted to print a copy of this journal for personal use only.</strong>\n\nWarmly,\nVinakaar`
+  `Hi ${name},\n\nThanks for requesting the journal. Please find it attached.\n\nYOU ARE PERMITTED TO PRINT A COPY OF THIS JOURNAL FOR PERSONAL USE ONLY.
+\n\nWarmly,\nVinakaar`
 ) + '\n',
 attachments: [
         {
